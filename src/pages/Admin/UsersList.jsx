@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AdminContext } from "../../context/AdminContext";
 import eye from "../../assets/Eye.svg";
 import { IoIosClose } from "react-icons/io";
+import Logo from "../../assets/LMDarkLogo.webp";
 
 const UsersList = () => {
   const { users, aToken, getAllUsers, changeAvailability } =
@@ -206,8 +207,10 @@ const UsersList = () => {
       {showModal && selectedUser && (
         <div className="fixed inset-0 bg-transparent bg-opacity-50 flex justify-center items-center lg:mx-0 mx-8">
           <div className="bg-white p-6 rounded shadow w-[600px] z-20">
-            <div className="flex flex-row justify-between">
-              <h2 className="md:text-lg text-base font-semibold mb-4 text-center">
+            <div className="flex flex-row justify-between items-center">
+              <img src={Logo} alt="logo" className="w-[52px] h-auto " />
+
+              <h2 className="md:text-lg text-base font-semibold text-center">
                 User Details
               </h2>
               <IoIosClose
@@ -216,7 +219,7 @@ const UsersList = () => {
               />
             </div>
 
-            <div className="border-b border-gray-200"></div>
+            <div className="border-b border-gray-200 pt-2"></div>
 
             <div className="grid grid-cols-2 gap-6 pt-8 text-gray-600 md:text-[16px] text-xs">
               <p>Name:</p>
