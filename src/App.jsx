@@ -12,6 +12,7 @@ import UsersList from "./pages/Admin/UsersList";
 import AdminProfile from "./pages/Admin/AdminProfile";
 import Plans from "./pages/Admin/Plans";
 import Widgets from "./pages/Admin/Widgets";
+import EmailTemplates from "./pages/Admin/EmailTemplates";
 
 function App() {
   const { aToken } = useContext(AdminContext);
@@ -35,6 +36,11 @@ function App() {
           <Route path="/plans" element={<Plans></Plans>} />
 
           <Route path="/widgets" element={<Widgets></Widgets>} />
+
+          <Route
+            path="/email-templates"
+            element={<EmailTemplates></EmailTemplates>}
+          />
 
           <Route
             path="/admin-profile"

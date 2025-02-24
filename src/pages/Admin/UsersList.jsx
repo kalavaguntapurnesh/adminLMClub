@@ -14,6 +14,8 @@ const UsersList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
+  const [searchQuery, setSearchQuery] = useState("");
+
   useEffect(() => {
     if (aToken) {
       getAllUsers();
@@ -30,11 +32,28 @@ const UsersList = () => {
     setSelectedUser(null);
   };
 
-  const totalUsers = users.length;
+  const filteredUsers = users.filter((user) => {
+    const fullName = `${user.firstName} ${user.lastName}`.toLowerCase();
+    const email = user.email.toLowerCase();
+    const country = user.billingAddress.country.toLowerCase();
+    const state = user.billingAddress.state.toLowerCase();
+    const city = user.billingAddress.city.toLowerCase();
+    const query = searchQuery.toLowerCase();
+
+    return (
+      fullName.includes(query) ||
+      email.includes(query) ||
+      country.includes(query) ||
+      state.includes(query) ||
+      city.includes(query)
+    );
+  });
+
+  const totalUsers = filteredUsers.length;
   const totalPages = Math.ceil(totalUsers / rowsPerPage);
   const startIndex = (currentPage - 1) * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
-  const currentUsers = users.slice(startIndex, endIndex);
+  const currentUsers = filteredUsers.slice(startIndex, endIndex);
 
   return (
     <div className="pt-2">
@@ -49,6 +68,18 @@ const UsersList = () => {
               </div>
 
               <div className="flex justify-between items-center mt-4 px-4">
+                <input
+                  type="text"
+                  name="search bar"
+                  placeholder="Search by name or email or city or state or country"
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    setCurrentPage(1);
+                  }}
+                  className="flex px-4 w-[500px] py-3 rounded border border-green-500 overflow-hidden max-w-md focus:outline-[#1a1a1a]"
+                />
+
                 <div>
                   <label className="text-gray-700 text-sm font-medium">
                     Users per page:{" "}
@@ -66,10 +97,9 @@ const UsersList = () => {
                     <option value={40}>40</option>
                   </select>
                 </div>
-
-                <div className="text-gray-700 text-sm">
+                {/* <div className="text-gray-700 text-sm">
                   Page {currentPage} of {totalPages}
-                </div>
+                </div> */}
               </div>
 
               <div className="px-4 ">
@@ -78,7 +108,7 @@ const UsersList = () => {
                     <thead>
                       <tr className="bg-green-400">
                         <th className="border border-gray-300 px-4 py-2">
-                          Name
+                          Full Name
                         </th>
                         <th className="border border-gray-300 px-4 py-2">
                           Country
@@ -107,7 +137,7 @@ const UsersList = () => {
                       {currentUsers.map((item, index) => (
                         <tr key={index} className="hover:bg-gray-100">
                           <td className="border text-center border-gray-300 px-4 py-2 text-neutral-800 text-sm">
-                            {item.name}
+                            {item.firstName} {item.lastName}
                           </td>
                           <td className="border text-center border-gray-300 px-4 py-2 text-zinc-600 text-sm">
                             {item.billingAddress.country}
@@ -128,10 +158,10 @@ const UsersList = () => {
                             <label className="relative inline-flex items-center cursor-pointer">
                               <input
                                 type="checkbox"
-                                checked={item.available}
+                                checked={true}
                                 className="sr-only peer"
                               />
-                              <div className="w-10 h-5 bg-gray-300 rounded-full peer-checked:after:translate-x-5 peer-checked:after:bg-white peer-checked:bg-green-800 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:border-gray-300 after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
+                              <div className="w-10 h-5 bg-gray-300 rounded-full peer-checked:after:translate-x-5 peer-checked:after:bg-white peer-checked:bg-green-500 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:border-gray-300 after:rounded-full after:h-4 after:w-4 after:transition-all"></div>
                             </label>
                           </td>
                           <td className="border text-center border-gray-300 px-4 py-2 text-zinc-600 text-sm align-middle h-full">
@@ -144,6 +174,14 @@ const UsersList = () => {
                           </td>
                         </tr>
                       ))}
+
+                      {currentUsers.length === 0 && (
+                        <tr>
+                          <td colSpan={8} className="text-center py-4">
+                            No users found
+                          </td>
+                        </tr>
+                      )}
                     </tbody>
                   </table>
                 </div>
@@ -157,7 +195,7 @@ const UsersList = () => {
                   className={`px-6 py-1.5 rounded ${
                     currentPage === 1
                       ? "bg-gray-300 cursor-not-allowed"
-                      : "bg-green-500 hover:bg-green-600 text-white"
+                      : "bg-green-500 hover:bg-green-600 text-white cursor-pointer"
                   }`}
                 >
                   Previous
@@ -169,7 +207,7 @@ const UsersList = () => {
                   className={`px-6 py-1.5 rounded ${
                     currentPage === totalPages
                       ? "bg-gray-300 cursor-not-allowed"
-                      : "bg-green-500 hover:bg-green-600 text-white"
+                      : "bg-green-500 hover:bg-green-600 text-white cursor-pointer"
                   }`}
                 >
                   Next
@@ -179,30 +217,6 @@ const UsersList = () => {
           </div>
         </div>
       </div>
-
-      {/* {showModal && selectedUser && (
-        <div className="fixed inset-0 bg-transparent bg-opacity-50 flex justify-center items-center mx-8">
-          <div className="bg-white p-6 rounded shadow w-[600px] z-20">
-            <div className="flex flex-row justify-between">
-              <h2 className="text-lg font-semibold mb-4">User Details</h2>
-              <IoIosClose
-                onClick={closeModal}
-                className="w-6 h-6 cursor-pointer"
-              />
-            </div>
-            <div className="border-b border-gray-200"></div>
-            <p>Name: {selectedUser.name}</p>
-            <p>Email: {selectedUser.email}</p>
-            <p>Country: {selectedUser.billingAddress.country}</p>
-            <button
-              onClick={closeModal}
-              className="bg-green-500 text-white px-4 py-2 rounded mt-4"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )} */}
 
       {showModal && selectedUser && (
         <div className="fixed inset-0 bg-transparent bg-opacity-50 flex justify-center items-center lg:mx-0 mx-8">
@@ -222,8 +236,10 @@ const UsersList = () => {
             <div className="border-b border-gray-200 pt-2"></div>
 
             <div className="grid grid-cols-2 gap-6 pt-8 text-gray-600 md:text-[16px] text-xs">
-              <p>Name:</p>
-              <p className="font-light">{selectedUser.name}</p>
+              <p>First Name:</p>
+              <p className="font-light">{selectedUser.firstName}</p>
+              <p>Last Name:</p>
+              <p className="font-light">{selectedUser.lastName}</p>
               <p>Email:</p>
               <p className="font-light">{selectedUser.email}</p>
               <p>Plan Choosen:</p>

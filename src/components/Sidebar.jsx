@@ -74,6 +74,18 @@ const Sidebar = () => {
                 isActive ? "bg-[#f2f2f3] border-r-4 border-green-400" : ""
               }`
             }
+            to={"/email-templates"}
+          >
+            <SiMinutemailer className="text-green-500 w-5 h-5" />
+            <p>Email Templates</p>
+          </NavLink>
+
+          <NavLink
+            className={({ isActive }) =>
+              `flex  items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer shadow my-[10px] mx-4 ${
+                isActive ? "bg-[#f2f2f3] border-r-4 border-green-400" : ""
+              }`
+            }
             to={"/category"}
           >
             <MdCategory className="text-green-500 w-5 h-5" />
@@ -102,18 +114,6 @@ const Sidebar = () => {
           >
             <LuWaypoints className="text-green-500 w-5 h-5" />
             <p>Reward Points</p>
-          </NavLink>
-
-          <NavLink
-            className={({ isActive }) =>
-              `flex  items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer shadow my-[10px] mx-4 ${
-                isActive ? "bg-[#f2f2f3] border-r-4 border-green-400" : ""
-              }`
-            }
-            to={"/email-templates"}
-          >
-            <SiMinutemailer className="text-green-500 w-5 h-5" />
-            <p>Email Templates</p>
           </NavLink>
 
           <NavLink

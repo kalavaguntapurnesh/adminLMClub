@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 
 const AddDoctor = () => {
-  const [docImg, setDocImg] = useState(false);
+  const [docImg, setDocImg] = useState(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,8 +14,8 @@ const AddDoctor = () => {
   const [about, setAbout] = useState("");
   const [speciality, setSpeciality] = useState("General physician");
   const [degree, setDegree] = useState("");
-  const [address1, setAddress1] = useState("");
-  const [address2, setAddress2] = useState("");
+  // const [address1, setAddress1] = useState("");
+  // const [address2, setAddress2] = useState("");
 
   const { backendUrl, aToken } = useContext(AdminContext);
 
@@ -38,10 +38,10 @@ const AddDoctor = () => {
       formData.append("about", about);
       formData.append("speciality", speciality);
       formData.append("degree", degree);
-      formData.append(
-        "address",
-        JSON.stringify({ line: address1, line2: address2 })
-      );
+      // formData.append(
+      //   "address",
+      //   JSON.stringify({ line: address1, line2: address2 })
+      // );
 
       formData.forEach((value, key) => {
         console.log(`${key} : ${value}`);
@@ -50,19 +50,12 @@ const AddDoctor = () => {
       const { data } = await axios.post(
         backendUrl + "/api/admin/add-doctor",
         formData,
-        { headers: { aToken } }
+        { headers: { aToken, "Content-Type": "multipart/form-data" } }
       );
 
       if (data.success) {
         toast.success(data.message);
-        setDocImg(false);
-        setName("");
-        setPassword("");
-        setEmail("");
-        setAddress1("");
-        setAddress2("");
-        setAbout("");
-        setFees("");
+        resetForm();
       } else {
         toast.error(data.message);
       }
@@ -72,27 +65,38 @@ const AddDoctor = () => {
     }
   };
 
+  // Reset form fields
+  const resetForm = () => {
+    setDocImg(null);
+    setName("");
+    setPassword("");
+    setEmail("");
+    setAbout("");
+    setFees("");
+  };
+
   return (
     <form onSubmit={onSubmitHandler} className="m-5 w-full">
       <p className="mb-3 text-lg font-medium">Add Doctor</p>
       <div className="bg-white p-8 border border-gray-200 rounded w-full max-w-4xl min-h-[80vh] overflow-hidden">
         <div className="flex items-center gap-4 mb-8 text-gray-500">
-          {/* <label htmlFor="doc-img">
+          <label htmlFor="doc-img">
             <img
-              src={docImg ? URL.createObjectURL(docImg) : assets.profile_pic}
-              alt=""
-              className="w-12 h-12 rounded-full cursor-pointer"
+              src={
+                docImg
+                  ? URL.createObjectURL(docImg)
+                  : "https://res.cloudinary.com/dieqhbgmy/image/upload/v1740039858/uploads/tntaay3cfzuiyeregrvg.png"
+              }
+              alt="Doctor"
+              className="w-12 h-12 rounded-full cursor-pointer object-cover"
             />
-          </label> */}
+          </label>
           <input
             onChange={(e) => setDocImg(e.target.files[0])}
             type="file"
             id="doc-img"
             hidden
           />
-          <p>
-            Upload doctor <br /> picture.
-          </p>
         </div>
 
         <div className="flex flex-col lg:flex-row items-start gap-10 text-gray-600">
@@ -204,7 +208,7 @@ const AddDoctor = () => {
               />
             </div>
 
-            <div className="flex-1 flex flex-col gap-1">
+            {/* <div className="flex-1 flex flex-col gap-1">
               <p>Address:</p>
               <input
                 onChange={(e) => setAddress1(e.target.value)}
@@ -224,7 +228,7 @@ const AddDoctor = () => {
                 placeholder="address 2"
                 id=""
               />
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -243,7 +247,7 @@ const AddDoctor = () => {
 
         <button
           type="submit"
-          className="bg-[#5f6fff] text-white px-10 py-3 mt-4 rounded-full"
+          className="bg-[#5f6fff] cursor-pointer text-white px-10 py-3 mt-4 rounded-full"
         >
           Add Doctor
         </button>
