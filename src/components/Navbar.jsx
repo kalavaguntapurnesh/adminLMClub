@@ -110,12 +110,12 @@ const Navbar = () => {
                   >
                     My Profile
                   </p>
-                  <p
+                  {/* <p
                     onClick={() => navigate("my-appointments")}
                     className="text-black cursor-pointer"
                   >
                     My Appointments
-                  </p>
+                  </p> */}
                   <p onClick={logout} className="text-black cursor-pointer">
                     Logout
                   </p>

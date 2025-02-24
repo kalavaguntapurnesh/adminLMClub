@@ -119,10 +119,10 @@ const EmailTemplates = () => {
 
                     <tr className="hover:bg-gray-100">
                       <td className="border border-gray-300 px-4 py-2 text-neutral-800 text-sm text-center">
-                        Otp
+                        OTP
                       </td>
                       <td className="border border-gray-300 px-4 py-2 text-zinc-600 text-sm">
-                        Thanks for requesting an Otp for verification.. Hello{" "}
+                        Thanks for requesting an Otp for verification. Hello{" "}
                         user, your OTP is 532678. Regards, LM CLUB.
                       </td>
 

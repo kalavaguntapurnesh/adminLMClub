@@ -167,13 +167,24 @@ const Widgets = () => {
         <div className="w-full">
           <div className="w-full mx-auto max-w-[1400px] ">
             <div className="p-4">
-              <div className="space-y-2 w-[100%] px-4">
-                <p className="lg:text-3xl text-2xl font-bold">
-                  <span className="text-green-500">Current</span> Widgets
-                </p>
+              <div className="flex flex-row items-center justify-between px-4">
+                <div className="">
+                  <p className="lg:text-3xl text-2xl font-bold">
+                    <span className="text-green-500">Current</span> Widgets
+                  </p>
+                </div>
+
+                <div className="flex justify-center items-center">
+                  <button
+                    onClick={() => setModalIsOpen(true)}
+                    className="bg-green-400 cursor-pointer text-white px-12 py-2 rounded"
+                  >
+                    Create a widget
+                  </button>
+                </div>
               </div>
 
-              <div className="px-4 w-full mt-5">
+              <div className="px-4 w-full mt-8">
                 {loading ? (
                   <p>Loading plans...</p>
                 ) : error ? (
@@ -183,17 +194,17 @@ const Widgets = () => {
                     <thead>
                       <tr className="bg-green-400">
                         <th className="border font-bold border-gray-300 px-4 py-2">
-                          Widget Logo
+                          Logo
                         </th>
                         <th className="border font-bold border-gray-300 px-4 py-2">
-                          Widget Name
+                          Name
                         </th>
 
                         <th className="border font-bold border-gray-300 px-4 py-2">
-                          Widget Description
+                          Description
                         </th>
                         <th className="border font-bold border-gray-300 px-4 py-2">
-                          Widget Status
+                          Status
                         </th>
                         <th className="border font-bold border-gray-300 px-4 py-2">
                           More Actions
@@ -260,15 +271,6 @@ const Widgets = () => {
                     </tbody>
                   </table>
                 )}
-              </div>
-
-              <div className="flex justify-center items-center pt-6">
-                <button
-                  onClick={() => setModalIsOpen(true)}
-                  className="bg-green-400 cursor-pointer text-white px-12 py-2 rounded mt-4"
-                >
-                  Create a widget
-                </button>
               </div>
             </div>
           </div>
