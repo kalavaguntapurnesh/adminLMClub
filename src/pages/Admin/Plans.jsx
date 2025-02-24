@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import Logo from "../../assets/LMDarkLogo.webp";
-// import edit from "../../assets/Edit.svg";
-import eye from "../../assets/Eye.svg";
 import axios from "axios";
 import { AdminContext } from "../../context/AdminContext";
 import { IoIosClose } from "react-icons/io";
 import { toast } from "react-toastify";
+import { MdEdit } from "react-icons/md";
+import { FaEye } from "react-icons/fa";
 
 const Plans = () => {
   const { backendUrl, aToken } = useContext(AdminContext);
@@ -255,10 +255,10 @@ const Plans = () => {
                               className="w-16 h-16"
                             />
                           </td>
-                          <td className="border border-gray-300 px-4 py-2 text-zinc-600 text-sm">
+                          <td className="border text-center  border-gray-300 px-4 py-2 text-zinc-600 text-sm">
                             {plan.planName}
                           </td>
-                          <td className="border border-gray-300 px-4 py-2 text-zinc-600 text-sm">
+                          <td className="border text-center  border-gray-300 px-4 py-2 text-zinc-600 text-sm">
                             ${plan.planAmount}
                           </td>
 
@@ -284,18 +284,18 @@ const Plans = () => {
                             {/* <div className="flex justify-center items-center w-8 h-8 border-2 border-green-400 bg-green-500 rounded cursor-pointer">
                               <img src={edit} alt="edit" className="w-5 h-5" />
                             </div> */}
-                            <div className="flex gap-2 flex-row items-center justify-center">
+                            <div className="flex gap-6 flex-row items-center justify-center">
                               <button
                                 onClick={() => openPlanModal(plan)}
-                                className="flex justify-center items-center rounded border-[1px] border-[#e2e2e2] bg-[#e2e2e2] cursor-pointer h-full"
+                                className="cursor-pointer"
                               >
-                                <img src={eye} alt="edit" className="w-6 h-6" />
+                                <FaEye className="w-5 h-5" />
                               </button>
                               <button
                                 className="cursor-pointer"
                                 onClick={() => openEditModal(plan)}
                               >
-                                Edit Plan
+                                <MdEdit className="w-5 h-5" />
                               </button>
                             </div>
                           </td>
@@ -543,7 +543,7 @@ const Plans = () => {
               </div>
             </div>
 
-            <div className="flex flex-row gap-4 justify-center mt-6 ">
+            <div className="flex items-center justify-center mt-6 ">
               <button
                 onClick={closePlanModal}
                 className="bg-green-400 transition ease-in-out duration-1000 cursor-pointer text-white md:px-16 px-12 md:py-2 py-[6px] rounded hover:bg-green-600"
@@ -551,12 +551,12 @@ const Plans = () => {
                 Close
               </button>
 
-              <button
+              {/* <button
                 className="bg-green-400 transition ease-in-out duration-1000 cursor-pointer text-white md:px-16 px-12 md:py-2 py-[6px] rounded hover:bg-green-600 font-semibold text-sm"
                 type="submit"
               >
                 Edit Plan
-              </button>
+              </button> */}
             </div>
           </div>
         </div>

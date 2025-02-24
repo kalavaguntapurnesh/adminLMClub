@@ -3,6 +3,7 @@ import { AdminContext } from "../../context/AdminContext";
 import eye from "../../assets/Eye.svg";
 import { IoIosClose } from "react-icons/io";
 import Logo from "../../assets/LMDarkLogo.webp";
+import { FaEye } from "react-icons/fa";
 
 const UsersList = () => {
   const { users, aToken, getAllUsers, changeAvailability } =
@@ -167,9 +168,10 @@ const UsersList = () => {
                           <td className="border text-center border-gray-300 px-4 py-2 text-zinc-600 text-sm align-middle h-full">
                             <div
                               onClick={() => openModal(item)}
-                              className="flex justify-center items-center rounded border-[1px] border-[#e2e2e2] bg-[#e2e2e2] cursor-pointer h-full"
+                              className="flex justify-center items-center cursor-pointer "
                             >
-                              <img src={eye} alt="edit" className="w-6 h-6" />
+                              <FaEye className="w-5 h-5" />
+                              {/* <img src={eye} alt="edit" className="w-6 h-6" /> */}
                             </div>
                           </td>
                         </tr>

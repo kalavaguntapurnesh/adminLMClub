@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { AdminContext } from "../../context/AdminContext";
-import edit from "../../assets/Edit.svg";
+import { MdEdit } from "react-icons/md";
 
 const EmailTemplates = () => {
   const { backendUrl, aToken } = useContext(AdminContext);
@@ -43,25 +43,24 @@ const EmailTemplates = () => {
                   </thead>
                   <tbody>
                     <tr className="hover:bg-gray-100">
-                      <td className="border border-gray-300 px-4 py-2 text-neutral-800 text-sm">
+                      <td className="border border-gray-300 px-4 py-2 text-neutral-800 text-sm text-center">
                         Welcome Email
                       </td>
                       <td className="border border-gray-300 px-4 py-2 text-zinc-600 text-sm">
-                        Welcome to LM ClubDear ,Welcome to LM Club! We are
-                        thrilled to have you join our community where you can
-                        explore, engage, and enjoy a range of exclusive benefits
-                        tailored just for you.Whether you're looking to promote
-                        your business, discover deals, or connect with the
-                        community, LM Club is here to enhance your
-                        experience.Your journey with us is just beginning, and
-                        we look forward to seeing you grow and thrive within the
-                        LM Club.Stay tuned for updates and new features that
-                        will continually enhance your experience.Warm
-                        regards,The LM Club Team© 2025 LM Club. All rights
-                        reserved.
+                        Welcome to LM Club. Dear user, we are thrilled to have
+                        you join our community where you can explore, engage,
+                        and enjoy a range of exclusive benefits tailored just
+                        for you.Whether you're looking to promote your business,
+                        discover deals, or connect with the community, LM Club
+                        is here to enhance your experience.Your journey with us
+                        is just beginning, and we look forward to seeing you
+                        grow and thrive within the LM Club.Stay tuned for
+                        updates and new features that will continually enhance
+                        your experience.Warm regards,The LM Club Team © 2025 LM
+                        Club. All rights reserved.
                       </td>
 
-                      <td className="border border-gray-300 px-4 py-2 text-zinc-600 text-sm">
+                      <td className="border border-gray-300 px-4 py-2 text-zinc-600 text-sm text-center">
                         <div className="flex flex-row gap-4">
                           <p>06-21-2024</p>
                         </div>
@@ -79,22 +78,22 @@ const EmailTemplates = () => {
                       </td>
 
                       <td className="border text-center border-gray-300 px-4 py-2 text-zinc-600 text-sm align-middle h-full">
-                        <div className="flex justify-center items-center w-8 h-8 border-2 border-green-400 bg-green-500 rounded cursor-pointer">
-                          <img src={edit} alt="edit" className="w-5 h-5" />
+                        <div className="flex justify-center items-center cursor-pointer">
+                          <MdEdit className="w-5 h-5" />
                         </div>
                       </td>
                     </tr>
 
                     <tr className="hover:bg-gray-100">
-                      <td className="border border-gray-300 px-4 py-2 text-neutral-800 text-sm">
+                      <td className="border border-gray-300 px-4 py-2 text-neutral-800 text-sm text-center">
                         Subscription Payment
                       </td>
                       <td className="border border-gray-300 px-4 py-2 text-zinc-600 text-sm">
-                        Hello userName You have subscribed for Plan to Validupto
-                        Regards,LM CLUB..
+                        Hello user, You have subscribed for the plan and it is
+                        valid upto 28-08-2025. Regards, LM CLUB.
                       </td>
 
-                      <td className="border border-gray-300 px-4 py-2 text-zinc-600 text-sm">
+                      <td className="border border-gray-300 px-4 py-2 text-zinc-600 text-sm text-center">
                         <div className="flex flex-row gap-4">
                           <p>01-03-2025</p>
                         </div>
@@ -112,22 +111,22 @@ const EmailTemplates = () => {
                       </td>
 
                       <td className="border text-center border-gray-300 px-4 py-2 text-zinc-600 text-sm align-middle h-full">
-                        <div className="flex justify-center items-center w-8 h-8 border-2 border-green-400 bg-green-500 rounded cursor-pointer">
-                          <img src={edit} alt="edit" className="w-5 h-5" />
+                        <div className="flex justify-center items-center cursor-pointer">
+                          <MdEdit className="w-5 h-5" />
                         </div>
                       </td>
                     </tr>
 
                     <tr className="hover:bg-gray-100">
-                      <td className="border border-gray-300 px-4 py-2 text-neutral-800 text-sm">
+                      <td className="border border-gray-300 px-4 py-2 text-neutral-800 text-sm text-center">
                         Otp
                       </td>
                       <td className="border border-gray-300 px-4 py-2 text-zinc-600 text-sm">
                         Thanks for requesting an Otp for verification.. Hello{" "}
-                        "userName"﻿Your OTP is 532678 Regards,LM CLUB..
+                        user, your OTP is 532678. Regards, LM CLUB.
                       </td>
 
-                      <td className="border border-gray-300 px-4 py-2 text-zinc-600 text-sm">
+                      <td className="border border-gray-300 px-4 py-2 text-zinc-600 text-sm text-center">
                         <div className="flex flex-row gap-4">
                           <p>06-21-2024</p>
                         </div>
@@ -145,27 +144,27 @@ const EmailTemplates = () => {
                       </td>
 
                       <td className="border text-center border-gray-300 px-4 py-2 text-zinc-600 text-sm align-middle h-full">
-                        <div className="flex justify-center items-center w-8 h-8 border-2 border-green-400 bg-green-500 rounded cursor-pointer">
-                          <img src={edit} alt="edit" className="w-5 h-5" />
+                        <div className="flex justify-center items-center cursor-pointer">
+                          <MdEdit className="w-5 h-5" />
                         </div>
                       </td>
                     </tr>
 
                     <tr className="hover:bg-gray-100">
-                      <td className="border border-gray-300 px-4 py-2 text-neutral-800 text-sm">
+                      <td className="border border-gray-300 px-4 py-2 text-neutral-800 text-sm text-center">
                         Broadcast Post
                       </td>
                       <td className="border border-gray-300 px-4 py-2 text-zinc-600 text-sm">
-                        Hello We’re excited to share that has just posted a new
-                        advertisement on the LM Club Broadcast!Head over to the
-                        Broadcast widget in your LM Club app to explore the
-                        details. Engage with the ad by sharing it on your social
-                        media to maximize your rewards.Stay tuned for more
-                        updates and keep enjoying the perks of our
+                        Hello user, we’re excited to share that has just posted
+                        a new advertisement on the LM Club Broadcast!Head over
+                        to the Broadcast widget in your LM Club app to explore
+                        the details. Engage with the ad by sharing it on your
+                        social media to maximize your rewards.Stay tuned for
+                        more updates and keep enjoying the perks of our
                         community.Regards,The LM CLUB.
                       </td>
 
-                      <td className="border border-gray-300 px-4 py-2 text-zinc-600 text-sm">
+                      <td className="border border-gray-300 px-4 py-2 text-zinc-600 text-sm text-center">
                         <div className="flex flex-row gap-4">
                           <p>06-21-2024</p>
                         </div>
@@ -183,8 +182,8 @@ const EmailTemplates = () => {
                       </td>
 
                       <td className="border text-center border-gray-300 px-4 py-2 text-zinc-600 text-sm align-middle h-full">
-                        <div className="flex justify-center items-center w-8 h-8 border-2 border-green-400 bg-green-500 rounded cursor-pointer">
-                          <img src={edit} alt="edit" className="w-5 h-5" />
+                        <div className="flex justify-center items-center cursor-pointer">
+                          <MdEdit className="w-5 h-5" />
                         </div>
                       </td>
                     </tr>

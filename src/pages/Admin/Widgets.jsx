@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import edit from "../../assets/Edit.svg";
 import { AdminContext } from "../../context/AdminContext";
 import { toast } from "react-toastify";
 import axios from "axios";
-import eye from "../../assets/Eye.svg";
 import Logo from "../../assets/LMDarkLogo.webp";
 import { IoIosClose } from "react-icons/io";
+import { MdEdit } from "react-icons/md";
+import { FaEye } from "react-icons/fa";
 
 const Widgets = () => {
   const { backendUrl, aToken } = useContext(AdminContext);
@@ -23,6 +23,13 @@ const Widgets = () => {
   const [showPlanModal, setShowPlanModal] = useState(false);
 
   const [selectedPlan, setSelectedPlan] = useState(null);
+
+  const [editMode, setEditMode] = useState(false);
+
+  const [editWidgetData, setEditWidgetData] = useState({
+    widgetName: "",
+    widgetDescription: "",
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -104,6 +111,56 @@ const Widgets = () => {
     setSelectedPlan(null);
   };
 
+  const openEditModal = (widget) => {
+    setSelectedPlan(widget);
+    setEditWidgetData({
+      widgetName: widget.widgetName,
+      widgetDescription: widget.widgetDescription,
+    });
+    setEditMode(true);
+  };
+
+  const closeEditModal = () => {
+    setEditMode(false);
+    setSelectedPlan(null);
+  };
+
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      console.log("The edited widget details are : ");
+      console.log(selectedPlan._id);
+      console.log(editWidgetData.widgetName);
+      console.log(editWidgetData.widgetDescription);
+      console.log(selectedPlan.isActive);
+
+      const response = await axios.put(
+        backendUrl + "/api/admin/update-widget",
+        {
+          widgetId: selectedPlan._id,
+          widgetName: editWidgetData.widgetName,
+          widgetDescription: editWidgetData.widgetDescription,
+          isActive: selectedPlan.isActive,
+        },
+        { headers: { aToken } }
+      );
+
+      if (response.data.success) {
+        toast.success("Widget Updated Successfully!");
+        setPlans((plan) =>
+          plan._id === selectedPlan._id ? response.data.updatedWidget : plan
+        );
+        closeEditModal();
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Error updating subscription plan");
+    }
+  };
+
   return (
     <div className="pt-2">
       <div className="relative">
@@ -153,7 +210,7 @@ const Widgets = () => {
                               className="w-16 h-16"
                             />
                           </td>
-                          <td className="border border-gray-300 px-4 py-2 text-zinc-600 text-sm">
+                          <td className="border border-gray-300 px-4 py-2 text-zinc-600 text-sm text-center ">
                             {plan.widgetName}
                           </td>
 
@@ -175,11 +232,19 @@ const Widgets = () => {
                             {/* <div className="flex justify-center items-center w-8 h-8 border-2 border-green-400 bg-green-500 rounded cursor-pointer">
                                            <img src={edit} alt="edit" className="w-5 h-5" />
                                          </div> */}
-                            <div
-                              onClick={() => openPlanModal(plan)}
-                              className="flex justify-center items-center rounded border-[1px] border-[#e2e2e2] bg-[#e2e2e2] cursor-pointer h-full"
-                            >
-                              <img src={eye} alt="edit" className="w-6 h-6" />
+                            <div className="flex gap-6 flex-row items-center justify-center">
+                              <button
+                                onClick={() => openPlanModal(plan)}
+                                className="cursor-pointer"
+                              >
+                                <FaEye className="w-5 h-5" />
+                              </button>
+                              <button
+                                className="cursor-pointer"
+                                onClick={() => openEditModal(plan)}
+                              >
+                                <MdEdit className="w-5 h-5" />
+                              </button>
                             </div>
                           </td>
                         </tr>
@@ -354,7 +419,7 @@ const Widgets = () => {
               </div>
             </div>
 
-            <div className="flex flex-row gap-4 justify-center mt-6 ">
+            <div className="flex justify-center mt-6">
               <button
                 onClick={closePlanModal}
                 className="bg-green-400 transition ease-in-out duration-1000 cursor-pointer text-white md:px-16 px-12 md:py-2 py-[6px] rounded hover:bg-green-600"
@@ -362,13 +427,90 @@ const Widgets = () => {
                 Close
               </button>
 
-              <button
+              {/* <button
                 className="bg-green-400 transition ease-in-out duration-1000 cursor-pointer text-white md:px-16 px-12 md:py-2 py-[6px] rounded hover:bg-green-600 font-semibold text-sm"
                 type="submit"
               >
                 Edit Widget
-              </button>
+              </button> */}
             </div>
+          </div>
+        </div>
+      )}
+
+      {editMode && selectedPlan && (
+        <div className="fixed inset-0 bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded shadow w-[600px]">
+            <div className="flex justify-between items-center">
+              <img src={Logo} alt="logo" className="w-[52px] h-auto" />
+              <h2 className="md:text-lg text-base font-bold text-center">
+                Edit Plan Details
+              </h2>
+              <IoIosClose
+                onClick={closeEditModal}
+                className="md:w-8 md:h-8 w-6 h-6 cursor-pointer"
+              />
+            </div>
+
+            <div className="border-b border-gray-200 pt-2"></div>
+
+            <form onSubmit={handleEditSubmit} className="mt-4">
+              <div className="mb-2">
+                <label
+                  htmlFor="username"
+                  className="block mb-2 text-sm font-bold text-colorThree "
+                >
+                  Plan Name
+                </label>
+
+                <input
+                  type="text"
+                  value={editWidgetData.widgetName}
+                  onChange={(e) =>
+                    setEditWidgetData({
+                      ...editWidgetData,
+                      widgetName: e.target.value,
+                    })
+                  }
+                  placeholder="Plan Name"
+                  className=" border border-gray-300 text-gray-900 sm:text-sm rounded focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500  block w-full p-2.5"
+                  required
+                />
+              </div>
+
+              <div className="mb-2">
+                <label
+                  htmlFor="username"
+                  className="block mb-2 text-sm font-bold text-colorThree "
+                >
+                  Plan Amount
+                </label>
+
+                <textarea
+                  type="text"
+                  rows={4}
+                  value={editWidgetData.widgetDescription}
+                  onChange={(e) =>
+                    setEditWidgetData({
+                      ...editWidgetData,
+                      widgetDescription: e.target.value,
+                    })
+                  }
+                  placeholder="Widget Description"
+                  className=" border border-gray-300 text-gray-900 sm:text-sm rounded focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500  block w-full p-2.5"
+                  required
+                />
+              </div>
+
+              <div className="flex justify-center items-center">
+                <button
+                  className="bg-green-400 text-white px-12 py-2 mt-4 cursor-pointer rounded"
+                  type="submit"
+                >
+                  Update Widget
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}
