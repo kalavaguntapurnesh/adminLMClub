@@ -2,8 +2,6 @@ import React, { useContext, useState } from "react";
 import { AdminContext } from "./../context/AdminContext";
 import { useNavigate } from "react-router-dom";
 import Logo from "../assets/LMDarkLogo.webp";
-import { BsSearch } from "react-icons/bs";
-import { NavLink } from "react-router-dom";
 import dropIcon from "../assets/dropdown_icon.svg";
 import { toast } from "react-toastify";
 import { RiMenu3Fill } from "react-icons/ri";
@@ -18,6 +16,7 @@ import { LuWaypoints } from "react-icons/lu";
 import { IoMdSettings } from "react-icons/io";
 import { IoDocument } from "react-icons/io5";
 import { SiMinutemailer } from "react-icons/si";
+import adminIcon from "../assets/adminIcon.png";
 
 const Navbar = () => {
   const { aToken, setAToken } = useContext(AdminContext);
@@ -25,28 +24,13 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const [isScrolled, setIsScrolled] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [openDropdownMobile, setOpenDropdownMobile] = useState(null);
 
   const logout = () => {
     toast.success("Logged out successfully!");
     navigate("/");
     aToken && setAToken("");
     aToken && localStorage.removeItem("aToken");
-  };
-
-  // Toggle dropdown and close others
-  const toggleDropdown = (dropdown) => {
-    if (openDropdown === dropdown) {
-      setOpenDropdown(null); // close if the same dropdown is clicked
-    } else {
-      setOpenDropdown(dropdown); // open the clicked dropdown
-    }
-  };
-
-  const toggleMobileDropdown = (dropdown) => {
-    setOpenDropdownMobile((prev) => (prev === dropdown ? null : dropdown)); // Toggle the dropdown
   };
 
   return (
@@ -96,11 +80,7 @@ const Navbar = () => {
         <div className="flex items-center gap-4">
           {aToken && (
             <div className="flex items-center gap-2 cursor-pointer group relative">
-              <img
-                src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80"
-                className="w-8 rounded-full"
-                alt="profile"
-              />
+              <img src={adminIcon} className="w-8 rounded-full" alt="profile" />
               <img className="w-2.5 " src={dropIcon} alt="drop" />
               <div className="absolute top-0 right-0 pt-14 text-base text-gray-600 z-20 hidden group-hover:block">
                 <div className="min-w-48 bg-white shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] rounded flex flex-col gap-4 p-4">
@@ -110,12 +90,6 @@ const Navbar = () => {
                   >
                     My Profile
                   </p>
-                  {/* <p
-                    onClick={() => navigate("my-appointments")}
-                    className="text-black cursor-pointer"
-                  >
-                    My Appointments
-                  </p> */}
                   <p onClick={logout} className="text-black cursor-pointer">
                     Logout
                   </p>
