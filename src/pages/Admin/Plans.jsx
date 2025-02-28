@@ -262,7 +262,7 @@ const Plans = () => {
                             <img
                               src={plan.image}
                               alt={plan.planName}
-                              className="w-16 h-16"
+                              className="w-[72px] h-[72px] rounded-full"
                             />
                           </td>
                           <td className="border text-center  border-gray-300 px-4 py-2 text-zinc-600 text-sm">
