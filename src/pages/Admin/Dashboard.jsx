@@ -14,8 +14,12 @@ import Free from "../../assets/Free.png";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
-  const { users, aToken, getAllUsers, changeAvailability } =
-    useContext(AdminContext);
+  const {
+    users,
+    aToken,
+    getAllUsers,
+    // changeAvailability
+  } = useContext(AdminContext);
 
   const navigate = useNavigate();
 
@@ -87,7 +91,10 @@ const Dashboard = () => {
               </div>
 
               <div className="grid md:grid-cols-2 lg:grid-cols-5 grid-cols-2 gap-4 pt-8">
-                <a href="/users-list" className="flex md:justify-start justify-center w-[200px] h-[160px]">
+                <a
+                  href="/users-list"
+                  className="flex md:justify-start justify-center w-[200px] h-[160px]"
+                >
                   <div className="w-full bg-white border border-gray-200 rounded p-6">
                     <div className="space-y-2">
                       <div className="flex flex-row justify-between">

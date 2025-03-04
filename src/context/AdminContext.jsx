@@ -18,7 +18,7 @@ const AdminContextProvider = (props) => {
   const getAllUsers = async () => {
     try {
       const { data } = await axios.post(
-        backendUrl + "/api/admin/all-doctors",
+        backendUrl + "/api/admin/all-users",
         {},
         { headers: { aToken } }
       );
@@ -50,23 +50,23 @@ const AdminContextProvider = (props) => {
     }
   };
 
-  const changeAvailability = async (docId) => {
-    try {
-      const { data } = await axios.post(
-        backendUrl + "/api/admin/change-availability",
-        { docId },
-        { headers: { aToken } }
-      );
-      if (data.success) {
-        toast.success(data.message);
-        getAllDoctors();
-      } else {
-        toast.error(data.message);
-      }
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
+  // const changeAvailability = async (docId) => {
+  //   try {
+  //     const { data } = await axios.post(
+  //       backendUrl + "/api/admin/change-availability",
+  //       { docId },
+  //       { headers: { aToken } }
+  //     );
+  //     if (data.success) {
+  //       toast.success(data.message);
+  //       getAllDoctors();
+  //     } else {
+  //       toast.error(data.message);
+  //     }
+  //   } catch (error) {
+  //     toast.error(error.message);
+  //   }
+  // };
 
   const value = {
     aToken,
@@ -74,10 +74,10 @@ const AdminContextProvider = (props) => {
     backendUrl,
     users,
     getAllUsers,
-    changeAvailability,
+    // changeAvailability,
     getAdminProfile,
     adminEmail,
-    setAdminEmail
+    setAdminEmail,
   };
 
   return (

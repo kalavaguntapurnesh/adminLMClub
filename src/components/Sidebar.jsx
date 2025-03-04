@@ -41,7 +41,7 @@ const Sidebar = () => {
           >
             <FaUsers className="text-green-500 w-5 h-5" />
 
-            <p>All Users</p>
+            <p>Users List</p>
           </NavLink>
 
           <NavLink
@@ -53,7 +53,7 @@ const Sidebar = () => {
             to={"/plans"}
           >
             <FaCalculator className="text-green-500 w-5 h-5" />
-            <p>Plans</p>
+            <p>Membership Plans</p>
           </NavLink>
 
           <NavLink
