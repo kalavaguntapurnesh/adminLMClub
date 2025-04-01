@@ -13,7 +13,8 @@ import AdminProfile from "./pages/Admin/AdminProfile";
 import Plans from "./pages/Admin/Plans";
 import Widgets from "./pages/Admin/Widgets";
 import EmailTemplates from "./pages/Admin/EmailTemplates";
-
+import Approvals from "./pages/Admin/Approvals";
+import ApprovalsPageInDashboard from "./pages/Admin/ApprovalsPageInDashboard";
 function App() {
   const { aToken } = useContext(AdminContext);
 
@@ -46,13 +47,28 @@ function App() {
             path="/admin-profile"
             element={<AdminProfile></AdminProfile>}
           />
+
+          <Route
+            path="/user-approvals/:postId"
+            element={<Approvals/>}
+          />
+           <Route
+            path="/user-approvals"
+            element={<ApprovalsPageInDashboard/>}
+          />
         </Routes>
       </div>
     </div>
   ) : (
     <>
-      <Login />
-      <ToastContainer />
+    <Login />
+    <ToastContainer />
+      <Routes>
+        <Route
+          path="/user-approvals/:postId"
+          element={<Approvals/>}
+        />
+      </Routes>
     </>
   );
 }
