@@ -203,7 +203,28 @@ useEffect(() => {
 }, [postId]);
 
 
+// State and Handlers
+const [currentViewIndex, setCurrentViewIndex] = useState({});
 
+const handlePrev = (postId) => {
+  setCurrentViewIndex((prevIndexes) => ({
+    ...prevIndexes,
+    [postId]: Math.max((prevIndexes[postId] || 0) - 1, 0),
+  }));
+};
+
+const handleNext = (postId, imagesLength) => {
+  setCurrentViewIndex((prevIndexes) => ({
+    ...prevIndexes,
+    [postId]: Math.min((prevIndexes[postId] || 0) + 1, imagesLength - 1),
+  }));
+};
+
+
+const [currentIndex, setCurrentIndex] = useState(0);
+useEffect(()=>{
+    setCurrentIndex(0);
+},[selectedPost])
 
   return (
       <div className="pt-2">
@@ -243,8 +264,8 @@ useEffect(() => {
                               {posts?.data.postName || posts?.data.eventName || "N/A"}  
                             </span>
                           </td>
-                          <td className="border text-center border-gray-300 px-4 py-2 text-neutral-800 text-sm">
-                            {/* {posts?.data.image}   */}
+                          {/* <td className="border text-center border-gray-300 px-4 py-2 text-neutral-800 text-sm">
+                       
                             {posts?.data.image ? (
                               posts?.data.image.includes("video") ? (  // ✅ Check if it's a video
                                 <video 
@@ -266,7 +287,65 @@ useEffect(() => {
                             ) : (
                               <p>No Media</p>
                             )}
-                          </td>
+
+                          </td> */}
+                                      <td className="border text-center border-gray-300 px-4 py-2">
+                                              
+                                              {/* <p>Images/Videos:</p> */}
+                                              {Array.isArray(posts?.data.image) && posts?.data.image.length > 0 ? (
+                                                <div className="relative">
+                                              {posts?.data.image && posts?.data.image[currentViewIndex[posts?.data._id] || 0].includes("video") ? (  // ✅ Check if it's a video
+                                                  <video 
+                                                  controls 
+                                                  muted 
+                                                  preload="metadata"
+                                                  className="w-[150px] mx-auto h-[75px] object-cover"
+                                                  onClick={() =>
+                                                    openMediaModal({ type: "video", src: posts?.data.image[currentViewIndex[posts?.data._id] || 0] })
+                                                  }                                                    >
+                                                  <source src={posts?.data.image[currentViewIndex[posts?.data._id] || 0]} type="video/mp4" />
+                                                    Your browser does not support the video tag.
+                                                  </video>
+                                              ) : (
+                                                <img
+                                                src={posts?.data.image[currentViewIndex[posts?.data._id] || 0]}
+                                                alt="Post"
+                                                className="w-[150px] mx-auto h-[75px] object-cover cursor-pointer"
+                                                onClick={() =>
+                                                  openMediaModal({ type: "image", src: posts?.data.image[currentViewIndex[posts?.data._id] || 0] })
+                                                }
+                                              />
+                                            )}
+                                              {/* Left Arrow - Disabled if first image */}
+                                              <button
+                                                className={`absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-500 text-white px-2 py-1 rounded ${
+                                                  (currentViewIndex[posts?.data._id] || 0) === 0 ? "opacity-50 cursor-not-allowed" : ""
+                                                }`}
+                                                onClick={() => handlePrev(posts?.data._id)}
+                                                disabled={(currentViewIndex[posts?.data._id] || 0) === 0}
+                                              >
+                                                {"<"}
+                                              </button>
+
+                                              {/* Right Arrow - Disabled if last image */}
+                                              <button
+                                                className={`absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-500 text-white px-2 py-1 rounded ${
+                                                  (currentViewIndex[posts?.data._id] || 0) === posts?.data.image.length - 1 ? "opacity-50 cursor-not-allowed" : ""
+                                                }`}
+                                                onClick={() => handleNext(posts?.data._id, posts?.data.image.length)}
+                                                disabled={(currentViewIndex[posts?.data._id] || 0) === posts?.data.image.length - 1}
+                                              >
+                                                {">"}
+                                              </button>
+                                              </div>
+                                              ) : (
+                                              <p>No Media</p>
+                                              )}
+
+
+
+                                          </td>
+
                           <td className="border text-center border-gray-300 px-4 py-2 text-neutral-800 text-sm">
                            <button
                               onClick={() => openModal(posts)}
@@ -336,7 +415,7 @@ useEffect(() => {
                               'No Image'
                             )} </p> */}
 
-              <p>Images/Videos:</p>
+              {/* <p>Images/Videos:</p>
                 {selectedPost?.data.image ? (
                   selectedPost?.data.image.includes("video") ? (  // ✅ Check if it's a video
                     <video 
@@ -357,7 +436,58 @@ useEffect(() => {
                   )
                 ) : (
                   <p>No Media</p>
-                )}
+                )} */}
+
+<p>Images/Videos:</p>
+              {
+              selectedPost?.data.image && selectedPost?.data.image.length > 0 ? (
+                <div className="relative">
+                  {/* Display Current Media */}
+                  {selectedPost?.data.image[currentIndex].includes("video") ? (
+                    <video
+                      controls
+                      className="w-[150px] h-[150px] mx-auto object-cover cursor-pointer"
+                      onClick={() => openMediaModal({ type: "video", src: selectedPost?.data.image[currentIndex] })}
+                    >
+                      <source src={selectedPost?.data.image[currentIndex]} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  ) : (
+                    <img
+                      src={selectedPost?.data.image[currentIndex]}
+                      alt="Post"
+                      className="w-[150px] h-[150px] mx-auto object-cover cursor-pointer"
+                      onClick={() => openMediaModal({ type: "image", src: selectedPost?.data.image[currentIndex] })}
+                    />
+                  )}
+
+                  {/* Left Arrow - Disabled if first image */}
+                  <button
+                    className={`absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-500 text-white px-2 py-1 rounded ${
+                      currentIndex === 0 ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
+                    onClick={() => setCurrentIndex((prev) => Math.max(prev - 1, 0))}
+                    disabled={currentIndex === 0}
+                  >
+                    {"<"}
+                  </button>
+
+                  {/* Right Arrow - Disabled if last image */}
+                  <button
+                    className={`absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-500 text-white px-2 py-1 rounded ${
+                      currentIndex === selectedPost?.data.image.length - 1 ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
+                    onClick={() => setCurrentIndex((prev) => Math.min(prev + 1, selectedPost?.data.image.length - 1))}
+                    disabled={currentIndex === selectedPost?.data.image.length - 1}
+                  >
+                    {">"}
+                  </button>
+                </div>
+              ) : (
+                <p>No Media</p>
+              )}
+
+
               {/* <p className="font-light">{selectedPost?.data.image}</p> */}
               <p>Event Start Date:</p>
               <p className="font-light">{selectedPost?.data.eventStartDate.slice(0, 10) || 'N/A'} & {selectedPost?.data.eventStartTime || 'N/A'} </p>
@@ -441,7 +571,7 @@ useEffect(() => {
                  'No Image'
                )} </p> */}
 
-              <p>Images/Videos:</p>
+              {/* <p>Images/Videos:</p>
                 {selectedPost?.data.image ? (
                   selectedPost?.data.image.includes("video") ? (  
                     <video 
@@ -462,7 +592,58 @@ useEffect(() => {
                   )
                 ) : (
                   <p>No Media</p>
-                )}
+                )} */}
+
+<p>Images/Videos:</p>
+              {
+              selectedPost?.data.image && selectedPost?.data.image.length > 0 ? (
+                <div className="relative">
+                  {/* Display Current Media */}
+                  {selectedPost?.data.image[currentIndex].includes("video") ? (
+                    <video
+                      controls
+                      className="w-[150px] h-[150px] mx-auto object-cover cursor-pointer"
+                      onClick={() => openMediaModal({ type: "video", src: selectedPost?.data.image[currentIndex] })}
+                    >
+                      <source src={selectedPost?.data.image[currentIndex]} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  ) : (
+                    <img
+                      src={selectedPost?.data.image[currentIndex]}
+                      alt="Post"
+                      className="w-[150px] h-[150px] mx-auto object-cover cursor-pointer"
+                      onClick={() => openMediaModal({ type: "image", src: selectedPost?.data.image[currentIndex] })}
+                    />
+                  )}
+
+                  {/* Left Arrow - Disabled if first image */}
+                  <button
+                    className={`absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-500 text-white px-2 py-1 rounded ${
+                      currentIndex === 0 ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
+                    onClick={() => setCurrentIndex((prev) => Math.max(prev - 1, 0))}
+                    disabled={currentIndex === 0}
+                  >
+                    {"<"}
+                  </button>
+
+                  {/* Right Arrow - Disabled if last image */}
+                  <button
+                    className={`absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-500 text-white px-2 py-1 rounded ${
+                      currentIndex === selectedPost?.data.image.length - 1 ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
+                    onClick={() => setCurrentIndex((prev) => Math.min(prev + 1, selectedPost?.data.image.length - 1))}
+                    disabled={currentIndex === selectedPost?.data.image.length - 1}
+                  >
+                    {">"}
+                  </button>
+                </div>
+              ) : (
+                <p>No Media</p>
+              )}
+
+
               <p>Description:</p>
               <p className="font-light">{selectedPost?.data.description}</p>
               <p>Coupon Code:</p>
@@ -538,7 +719,7 @@ useEffect(() => {
                  'No Image'
                )} </p> */}
 
-                <p>Images/Videos:</p>
+                {/* <p>Images/Videos:</p>
                 {selectedPost?.data.image ? (
                   selectedPost?.data.image.includes("video") ? (  
                     <video 
@@ -559,7 +740,58 @@ useEffect(() => {
                   )
                 ) : (
                   <p>No Media</p>
-                )}
+                )} */}
+
+<p>Images/Videos:</p>
+              {
+              selectedPost?.data.image && selectedPost?.data.image.length > 0 ? (
+                <div className="relative">
+                  {/* Display Current Media */}
+                  {selectedPost?.data.image[currentIndex].includes("video") ? (
+                    <video
+                      controls
+                      className="w-[150px] h-[150px] mx-auto object-cover cursor-pointer"
+                      onClick={() => openMediaModal({ type: "video", src: selectedPost?.data.image[currentIndex] })}
+                    >
+                      <source src={selectedPost?.data.image[currentIndex]} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  ) : (
+                    <img
+                      src={selectedPost?.data.image[currentIndex]}
+                      alt="Post"
+                      className="w-[150px] h-[150px] mx-auto object-cover cursor-pointer"
+                      onClick={() => openMediaModal({ type: "image", src: selectedPost?.data.image[currentIndex] })}
+                    />
+                  )}
+
+                  {/* Left Arrow - Disabled if first image */}
+                  <button
+                    className={`absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-500 text-white px-2 py-1 rounded ${
+                      currentIndex === 0 ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
+                    onClick={() => setCurrentIndex((prev) => Math.max(prev - 1, 0))}
+                    disabled={currentIndex === 0}
+                  >
+                    {"<"}
+                  </button>
+
+                  {/* Right Arrow - Disabled if last image */}
+                  <button
+                    className={`absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-500 text-white px-2 py-1 rounded ${
+                      currentIndex === selectedPost?.data.image.length - 1 ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
+                    onClick={() => setCurrentIndex((prev) => Math.min(prev + 1, selectedPost?.data.image.length - 1))}
+                    disabled={currentIndex === selectedPost?.data.image.length - 1}
+                  >
+                    {">"}
+                  </button>
+                </div>
+              ) : (
+                <p>No Media</p>
+              )}
+
+
               <p>Description:</p>
               <p className="font-light">{selectedPost?.data.description}</p>
               <p>Location:</p>

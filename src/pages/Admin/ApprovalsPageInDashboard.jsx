@@ -32,6 +32,7 @@ const [filter, setFilter] = useState("pending");
 
 useEffect(() => {
   const fetchPosts = async () => {
+    setLoading(true)
     try {
       const response = await fetch(`${backendURL}/api/beehive/fetch-all-post-approval-statuses`);
       const data = await response.json();
@@ -237,7 +238,18 @@ useEffect(()=>{
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {filteredData.length > 0  ? (
+                                        
+                                        {loading ? (
+                                          <tr>
+                                            <td colSpan="7" className="text-center py-4">
+                                              <div className="flex justify-center items-center">
+                                                <div className="spinner-border animate-spin border-4 rounded-full border-t-transparent border-blue-600 w-10 h-10"></div>
+                                              </div>
+                                              Loading...
+                                            </td>
+                                          </tr>
+                                        ) : 
+                                        filteredData.length > 0  ? (
                                         filteredData.map((post, index) => (
                                             <tr key={index} className="hover:bg-gray-100">
                                             <td className="border text-center border-gray-300 px-4 py-2 text-neutral-800 text-sm">
