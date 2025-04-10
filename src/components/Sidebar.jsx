@@ -21,8 +21,7 @@ const Sidebar = () => {
         <ul className="text-[#515151] mt-5 ">
           <NavLink
             className={({ isActive }) =>
-              `flex  items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer shadow my-[10px] mx-4 ${
-                isActive ? "bg-[#f2f2f3] border-r-4 border-green-400" : ""
+              `flex  items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer shadow my-[10px] mx-4 ${isActive ? "bg-[#f2f2f3] border-r-4 border-green-400" : ""
               }`
             }
             to={"/admin-dashboard"}
@@ -33,8 +32,7 @@ const Sidebar = () => {
 
           <NavLink
             className={({ isActive }) =>
-              `flex  items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer shadow my-[10px] mx-4 ${
-                isActive ? "bg-[#f2f2f3] border-r-4 border-green-400" : ""
+              `flex  items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer shadow my-[10px] mx-4 ${isActive ? "bg-[#f2f2f3] border-r-4 border-green-400" : ""
               }`
             }
             to={"/users-list"}
@@ -46,32 +44,40 @@ const Sidebar = () => {
 
           <NavLink
             className={({ isActive }) =>
-              `flex  items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer shadow my-[10px] mx-4 ${
-                isActive ? "bg-[#f2f2f3] border-r-4 border-green-400" : ""
+              `flex  items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer shadow my-[10px] mx-4 ${isActive ? "bg-[#f2f2f3] border-r-4 border-green-400" : ""
               }`
             }
             to={"/plans"}
           >
             <FaCalculator className="text-green-500 w-5 h-5" />
-            <p>Plans</p>
+            <p>All Plans</p>
           </NavLink>
 
           <NavLink
             className={({ isActive }) =>
-              `flex  items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer shadow my-[10px] mx-4 ${
-                isActive ? "bg-[#f2f2f3] border-r-4 border-green-400" : ""
+              `flex  items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer shadow my-[10px] mx-4 ${isActive ? "bg-[#f2f2f3] border-r-4 border-green-400" : ""
               }`
             }
             to={"/widgets"}
           >
             <MdWidgets className="text-green-500 w-5 h-5" />
-            <p>Widgets</p>
+            <p>All Widgets</p>
           </NavLink>
 
           <NavLink
             className={({ isActive }) =>
-              `flex  items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer shadow my-[10px] mx-4 ${
-                isActive ? "bg-[#f2f2f3] border-r-4 border-green-400" : ""
+              `flex  items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer shadow my-[10px] mx-4 ${isActive ? "bg-[#f2f2f3] border-r-4 border-green-400" : ""
+              }`
+            }
+            to={"/estore-dashboard"}
+          >
+            <IoMdSettings className="text-green-500 w-5 h-5" />
+            <p>E-Store Dashboard</p>
+          </NavLink>
+
+          <NavLink
+            className={({ isActive }) =>
+              `flex  items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer shadow my-[10px] mx-4 ${isActive ? "bg-[#f2f2f3] border-r-4 border-green-400" : ""
               }`
             }
             to={"/email-templates"}
@@ -82,20 +88,18 @@ const Sidebar = () => {
 
           <NavLink
             className={({ isActive }) =>
-              `flex  items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer shadow my-[10px] mx-4 ${
-                isActive ? "bg-[#f2f2f3] border-r-4 border-green-400" : ""
+              `flex  items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer shadow my-[10px] mx-4 ${isActive ? "bg-[#f2f2f3] border-r-4 border-green-400" : ""
               }`
             }
-            to={"/category"}
+            to={"/estore-products-list"}
           >
             <MdCategory className="text-green-500 w-5 h-5" />
-            <p>Category</p>
+            <p>E-Store Products</p>
           </NavLink>
 
           <NavLink
             className={({ isActive }) =>
-              `flex  items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer shadow my-[10px] mx-4 ${
-                isActive ? "bg-[#f2f2f3] border-r-4 border-green-400" : ""
+              `flex  items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer shadow my-[10px] mx-4 ${isActive ? "bg-[#f2f2f3] border-r-4 border-green-400" : ""
               }`
             }
             to={"/user-approvals"}
@@ -106,32 +110,20 @@ const Sidebar = () => {
 
           <NavLink
             className={({ isActive }) =>
-              `flex  items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer shadow my-[10px] mx-4 ${
-                isActive ? "bg-[#f2f2f3] border-r-4 border-green-400" : ""
+              `flex  items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer shadow my-[10px] mx-4 ${isActive ? "bg-[#f2f2f3] border-r-4 border-green-400" : ""
               }`
             }
-            to={"/reward-points"}
+            to={"/estore-users-list"}
           >
             <LuWaypoints className="text-green-500 w-5 h-5" />
-            <p>Reward Points</p>
+            <p>E-Store Users</p>
           </NavLink>
+
+
 
           <NavLink
             className={({ isActive }) =>
-              `flex  items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer shadow my-[10px] mx-4 ${
-                isActive ? "bg-[#f2f2f3] border-r-4 border-green-400" : ""
-              }`
-            }
-            to={"/system-settings"}
-          >
-            <IoMdSettings className="text-green-500 w-5 h-5" />
-            <p>System Settings</p>
-          </NavLink>
-
-          <NavLink
-            className={({ isActive }) =>
-              `flex  items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer shadow my-[10px] mx-4 ${
-                isActive ? "bg-[#f2f2f3] border-r-4 border-green-400" : ""
+              `flex  items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer shadow my-[10px] mx-4 ${isActive ? "bg-[#f2f2f3] border-r-4 border-green-400" : ""
               }`
             }
             to={"/admin-profile"}

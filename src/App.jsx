@@ -15,6 +15,9 @@ import Widgets from "./pages/Admin/Widgets";
 import EmailTemplates from "./pages/Admin/EmailTemplates";
 import Approvals from "./pages/Admin/Approvals";
 import ApprovalsPageInDashboard from "./pages/Admin/ApprovalsPageInDashboard";
+import EstoreUsersList from "./pages/Admin/EStoreUsers";
+import EstoreProductsList from './pages/Admin/EStoreProductsList';
+import EStoreDashboard from "./pages/Admin/EStoreDashboard";
 function App() {
   const { aToken } = useContext(AdminContext);
 
@@ -33,10 +36,15 @@ function App() {
           />
           <Route path="/add-doctor" element={<AddDoctor></AddDoctor>} />
           <Route path="/users-list" element={<UsersList></UsersList>} />
+          <Route path="/estore-users-list" element={<EstoreUsersList></EstoreUsersList>} />
+
+          <Route path="/estore-products-list" element={<EstoreProductsList></EstoreProductsList>} />
 
           <Route path="/plans" element={<Plans></Plans>} />
 
           <Route path="/widgets" element={<Widgets></Widgets>} />
+
+          <Route path="/estore-dashboard" element={<EStoreDashboard></EStoreDashboard>} />
 
           <Route
             path="/email-templates"
@@ -50,23 +58,23 @@ function App() {
 
           <Route
             path="/user-approvals/:postId"
-            element={<Approvals/>}
+            element={<Approvals />}
           />
-           <Route
+          <Route
             path="/user-approvals"
-            element={<ApprovalsPageInDashboard/>}
+            element={<ApprovalsPageInDashboard />}
           />
         </Routes>
       </div>
     </div>
   ) : (
     <>
-    <Login />
-    <ToastContainer />
+      <Login />
+      <ToastContainer />
       <Routes>
         <Route
           path="/user-approvals/:postId"
-          element={<Approvals/>}
+          element={<Approvals />}
         />
       </Routes>
     </>
